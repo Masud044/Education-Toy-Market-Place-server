@@ -43,12 +43,17 @@ async function run() {
       app.get('/AllToy',async(req,res)=>{
 
         //   console.log(req.query.email)
-          let query = {}
+        const sort = req.query.sort;
+        //  console.log(sort)
+          let query = {};
+          const options = {
+             sort:{'price': sort == 'asc'? 1 : -1}
+          }
           if(req.query?.email){
              query = {
                 sellerEmail:req.query.email}
           }
-         const result = await alltoyCollection.find(query).toArray();
+         const result = await alltoyCollection.find(query,options).toArray();
          res.send(result); 
       })
 
