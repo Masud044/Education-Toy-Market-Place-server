@@ -44,8 +44,12 @@ async function run() {
 
         //   console.log(req.query.email)
         const sort = req.query.sort;
-        //  console.log(sort)
-          let query = {};
+        const search = req.query.search;
+
+          console.log(search)
+          let query={};
+
+           const filter = {toyName:{$regex: search, $options:'i'}};
           const options = {
              sort:{'price': sort == 'asc'? 1 : -1}
           }
