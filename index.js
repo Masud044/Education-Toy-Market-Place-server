@@ -66,6 +66,22 @@ async function run() {
         res.send(result);
 
       })
+      app.patch('/AllToy/:id',async(req,res)=>{
+        const id = req.params.id;
+        const filter = {_id:new ObjectId(id)};
+        const updateStatus = req.body;
+        console.log(updateStatus);
+        const updateDoc = {
+          $set: {
+            price: updateStatus.price,
+            quantity: updateStatus.quantity,
+            description: updateStatus.description,
+           
+          },
+        };
+        const result = await alltoyCollection.updateOne(filter,updateDoc);
+        res.send(result);
+      })
 
     
   
