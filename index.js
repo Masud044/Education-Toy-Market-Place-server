@@ -39,19 +39,38 @@ async function run() {
         const result = await alltoyCollection.insertOne(item);
         res.send(result);
       })
+      app.get('/alToy',async(req,res)=>{
 
-      app.get('/AllToy',async(req,res)=>{
-
-        //   console.log(req.query.email)
-        const sort = req.query.sort;
+       
         const search = req.query.search;
 
-          console.log(search)
-          let query={};
+          // console.log(search)
+         
 
            const filter = {toyName:{$regex: search, $options:'i'}};
+         
+         const result = await alltoyCollection.find(filter).limit(20).toArray();
+         res.send(result); 
+      })
+      app.get('/AllToy',async(req,res)=>{
+         const result = await alltoyCollection.find().toArray();
+         res.send(result); 
+      })
+
+     
+
+     
+
+      app.get('/mytoy',async(req,res)=>{
+
+       
+        const sort = req.query.sort;
+      
+          let query={};
+
+        
           const options = {
-             sort:{'price': sort == 'asc'? 1 : -1}
+             sort:{"price": sort == 'asc'? 1 : -1}
           }
           if(req.query?.email){
              query = {
